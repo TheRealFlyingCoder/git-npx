@@ -19,9 +19,9 @@ To try it out just use the npx installer:
 2. Put it on a public github repo
 3. Create the NPM installer package with `npx git-npx <project-name>`
 4. Go into the package.json and update all the details, most importantly:
-    * name: This will be your npm installer package name
-    * bin/git-npx: Rename the key `"git-npx"` to match your package name
-    * repository/url: This is what the code references to find your accelerator (Must be a .git url)
+    * **name**: This will be your npm installer package name
+    * **bin/git-npx**: Rename the key `"git-npx"` to match your package name
+    * **repository/url**: This is what the code references to find your accelerator *(Must be a .git url)*
 5. `npm login`
 6. `npm publish`
 7. You are done!!
