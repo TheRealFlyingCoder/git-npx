@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import os from 'os';
 import {spawnSync} from 'child_process';
 import AdmZip from 'adm-zip';
-import request from 'request';
+import axios from 'axios';
 import camel from './scripts/camelMessages';
 import brandMessage from './scripts/brandMessage';
 import nextSteps from './scripts/nextStepsMessage';
@@ -62,8 +62,8 @@ export async function cli(args) {
                 console.log(chalk.cyan(`Copying project template to ${destination}...`));
                 try {
                     const gitUrl = packageJson.repository.url.replace('.git', '/zipball/master')
-                    request.get({url: gitUrl, encoding: null}, (err, res, body) => {
-                        const zip = new AdmZip(body);
+                    axios.get(gitUrl, {responseType: 'arraybuffer'}).then(res => {
+                        const zip = new AdmZip(res.data);
                         const files = zip.getEntries();
                         files.forEach(file => {
                             //Only copy files as we are handling the folders

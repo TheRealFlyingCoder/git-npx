@@ -27,3 +27,8 @@ To try it out just use the npx installer:
 7. You are done!!
 
 Try out installation of your new accelerator with `npx <package-name> TestProject`
+
+**Optional steps:**
+1. Add a custom brand message in `scripts/brandMessage.js` so your installs have a personal touch
+2. Add specific next steps in `scripts/nextStepsMessage.js` if it's not generic
+3. CHANGE THE WHOLE THING HOWEVER YOU LIKE! :D Go into `git-npx.js` and play around
