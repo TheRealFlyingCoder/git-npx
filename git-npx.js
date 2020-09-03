@@ -67,7 +67,7 @@ export async function cli(args) {
                         const files = zip.getEntries();
                         files.forEach(file => {
                             //Only copy files as we are handling the folders
-                            if (file.entryName.includes('.')) {
+                            if (!file.entryName.endsWith('/')) {
                                 let newDestination = destination;
                                 //Remove the root directory
                                 let entryPath = file.entryName.substring(file.entryName.indexOf('/') + 1, file.entryName.length);
