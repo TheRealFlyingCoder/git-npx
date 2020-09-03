@@ -1,0 +1,33 @@
+{
+    "name": "git-npx",
+    "version": "1.0.0",
+    "description": "TheFlyingCoders accelerator for quickly making git accelerators install-able with NPX",
+    "files": [
+        "index.js",
+        "git-npx.js",
+        "scripts"
+    ],
+    "engines": {
+        "node": ">=8"
+    },
+    "bin": {
+        "git-npx": "index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/TheRealFlyingCoder/git-npx.git"
+    },
+    "author": "Thomas Rowe (TheFlyingCoder)",
+    "license": "MIT",
+    "dependencies": {
+        "adm-zip": "^0.4.16",
+        "arg": "^4.1.1",
+        "chalk": "^2.4.2",
+        "esm": "^3.2.25",
+        "fs": "^0.0.1-security",
+        "os": "^0.1.1",
+        "path": "^0.12.7",
+        "request": "^2.88.2",
+        "tmp": "^0.1.0"
+    }
+}
