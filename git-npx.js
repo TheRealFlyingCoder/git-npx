@@ -2,7 +2,6 @@ import arg from 'arg';
 import path from 'path';
 import fs from 'fs';
 import chalk from 'chalk';
-import rimraf from 'rimraf';
 import os from 'os';
 import {spawnSync} from 'child_process';
 import AdmZip from 'adm-zip';
@@ -31,8 +30,8 @@ function validateProjectName(projectName) {
     if (!projectName) {
         camel.error('Project name was not passed.');
         return false;
-    } else if (!/^[A-Za-z\-]+$/.test(projectName)) {
-        camel.error('Project names should only have lowercase letters and dashes.');
+    } else if (!/^[a-z0-9\-]+$/.test(projectName)) {
+        camel.error('Project names should only have lowercase letters, numbers and dashes.');
         return false;
     }
     
@@ -67,17 +66,27 @@ export async function cli(args) {
                         const zip = new AdmZip(body);
                         const files = zip.getEntries();
                         files.forEach(file => {
-                            //file.entryName = file.entryName.substring(file.entryName.indexOf('/') + 1, file.entryName.length);
-                            zip.extractEntryTo(file, destination, false, true);
-                            
+                            //Only copy files as we are handling the folders
+                            if (file.entryName.includes('.')) {
+                                let newDestination = destination;
+                                //Remove the root directory
+                                let entryPath = file.entryName.substring(file.entryName.indexOf('/') + 1, file.entryName.length);
+
+                                //Get the new path for subdirectories
+                                if(entryPath.includes('/') && entryPath.lastIndexOf('/') !== entryPath.length - 1) {
+                                    //Just add the path to the file, not the file itself
+                                    newDestination = path.join(newDestination, entryPath.substring(0, entryPath.lastIndexOf('/')))
+                                }
+                                
+                                zip.extractEntryTo(file, newDestination, false, true);
+                            }
                         })
-                        // zip.extractAllTo(destination, false, true);
-                        // console.log(chalk.green('Copy complete!'));
-                        // console.log('Running npm installation...');
-                        // const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
-                        // spawnSync(npmCmd, ['i', '--no-package-lock'], { env: process.env, cwd: destination, stdio: 'inherit' });
-                        // camel.success('Installation complete!');
-                        // nextSteps();
+                        console.log(chalk.green('Copy complete!'));
+                        console.log('Running npm installation...');
+                        const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
+                        spawnSync(npmCmd, ['i', '--no-package-lock'], { env: process.env, cwd: destination, stdio: 'inherit' });
+                        camel.success('Installation complete!');
+                        nextSteps();
                     });
                 } catch (e) {
                     camel.error(e);
