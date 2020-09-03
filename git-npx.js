@@ -30,7 +30,7 @@ function validateProjectName(projectName) {
     if (!projectName) {
         camel.error('Project name was not passed.');
         return false;
-    } else if (!/^[a-z0-9\-]+$/.test(projectName)) {
+    } else if (!/^[A-Za-z0-9\-]+$/.test(projectName)) {
         camel.error('Project names should only have lowercase letters, numbers and dashes.');
         return false;
     }
